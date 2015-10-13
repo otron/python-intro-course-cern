@@ -14,7 +14,7 @@ def sortnames_first(fname='/etc/passwd'):
     # Second gotcha: they're strings. We want to sort 'em like they're numbers.
     # Gotta convert the key to an int.
     c4 = sorted(c3, key=lambda x: int(x[2]))
-    
+
     return c4
 
 def sortnames_perexample(fname='/etc/passwd'):
@@ -27,7 +27,7 @@ def sortnames_perexample(fname='/etc/passwd'):
             uname, _, uid, _ = line.split(':', 3)
             res.append((uname, int(uid)))
         res.sort(key=lambda x: x[1])
-                
+
     return res
 
 import itertools
@@ -40,13 +40,13 @@ def printcmp(f1=sortnames_first, f2=sortnames_perexample):
         # ax[1] == list, uname = ax[1][0], uid = ax[1][2]
         # bx[1] == [uname, uid]
         print ax[0], "->", ax[1][0], ax[1][2], " -- ", bx[1][0], bx[1][1]
-        
+
 # printcmp()
 
 def my_keygen(n):
     def _getkey(seq):
         return seq[n]
-    
+
     return _getkey
 
 def my_cmpgen(n):
@@ -55,7 +55,6 @@ def my_cmpgen(n):
     return _cmp
 
 a = my_cmpgen(0)
-print(a([0], [1]))
 
 # The process of rewriting a multi-argument function to a
 # single-argument function that returns another single-argument function
@@ -63,4 +62,47 @@ print(a([0], [1]))
 # is called currying.
 # For a function f(x, a) -> z we would have a function g(x) -> h, h(a) -> z
 
+def getulist(fname='/etc/passwd'):
+    res = []
+    with open(fname, 'r') as f:
+        for line in f:
+            uname, _, uid, _ = line.split(':', 3)
+            res.append((uname, int(uid)))
+    return res
+
 # Do the thing again but with functools.partial with the non-curried version of key()
+
+# "haskell example"
+def addem(a, b, c, d): return a+b+c+d
+add3 = partial(addem, 1,2)
+add3(100, 10)  # => 113
+
+
+# non-curried version of key
+def key(n, seq):
+    return seq[n]
+# a = partial(key, n)
+# b = my_keygen(n)
+# a(x) == b(x)
+from functools import partial
+
+lisorted = sorted(li, key=partial(key, 1))
+
+def partialz(func, *args, **kwargs):
+    """Function implementation of `functools.partial`.
+    Closes around `func` and the arguments given, returning a function
+    which behaves like `func` called with the original arguments (to `partialz`)
+    and whichever arguments are given to it. Arguments passed to the returned
+    function take precedence.
+    Mostly lifted from sec 9.8 in the python docs."""
+    def funz(*argz, **kwargz):
+        nkw = kwargs.copy()
+        nkw.update(kwargz)
+        # We can add `argz` and `args` together b/c they're lists
+        # kwargz and kwargs are dicts. We 'add' kwargs to kwargz via kwargz.update()
+        return func(*(args+argz), **nkw)
+    return funz
+
+print(lisorted == sorted(li, key=partialz(key, 1)))
+print(lisorted == sorted(li, key=operator.itemgetter(1)))
+

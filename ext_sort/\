@@ -1,0 +1,31 @@
+#!/bin/python
+
+def make_reader(fname, butts, xy, w=''):
+    print(fname)
+    print(butts)
+    print(xy)
+    def do_read(step):
+        print(fname)
+        print(butts)
+        with open(fname, 'r') as f:
+            #print(butts, step)
+            f.seek(butts)
+            res = [f.readline() for i in range(0, step)]
+            butts = f.tell()
+        return res
+
+    return do_read
+
+#ax = make_reader('nums', 0, 0)
+#ax(3)
+# fx = make_reader('nums', 2, 0)
+## Durr this isn't working.
+def keytest(n, w):
+    def keyz(seq):
+        print(n)
+        print(w)
+        return seq[n]
+    return keyz
+
+fx = keytest(0, w)
+print(fx('whut'))

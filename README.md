@@ -14,10 +14,10 @@ set the `user.name` and `user.email` config variables for the repository:
 * `git config --file .git/config user.email EMAILS_YO`
 
 ### Cloning
-`git clone https://otron@github.com/otron/python-intro-course.git`
+`git clone https://otron@github.com/otron/python-intro-course-cern.git`
 
 ### Pushing
 if you cloned it with the https read-only url (`https://github.com/...`) do:
-`git remote set-url origin https://otron@github.com/otron/python-intro-course.git`
+`git remote set-url origin https://otron@github.com/otron/python-intro-course-cern.git`
 to fix it.
 

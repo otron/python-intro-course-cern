@@ -16,6 +16,7 @@ ONLY THE THINGS THAT INHERIT FROM `object` ARE OBJECTS.
 SO DESCRIPTOR CLASSES HAVE TO INHERIT FROM `object` OTHERWISE THEY DON'T WORK LOL
 This might be related to both classes (owner and descriptor) having to conform to the new style class
 thing for it to work in python 2.7.x
+Aaand yeah. A new style class in python 2.7.x is one which inherits from `object`.
 """
 
 class desc_fail():

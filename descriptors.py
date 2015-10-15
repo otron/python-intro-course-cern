@@ -32,22 +32,26 @@ class desc_yay(object):
         self._val = val
 
     def __get__(self, obj, objtype):
-        print(":))")
-        return self._val
+        print("obj: {0}, objtype: {1}".format(obj, objtype))
+        return getattr(obj, self._val)
 
     def __set__(self, obj, value):
         print("ooh you done setting")
-        self._val = value
+        setattr(obj, self._val, value)
         
 class owner(object):
-    x = desc_yay(5)   # Works!
-    y = desc_fail(5)  # Doesn't work.
+    x = desc_yay('_desc')   # Works!
+    dc = desc_yay('_wut')  # Works
+#    y = desc_fail(5)  # Doesn't work.
     def __init__(self, val=''):
-        self.ix = desc_yay(val)  # Doesn't work.
-        self.iy = desc_fail(val)  # Doesn't work
+        self._desc = '?'
+        #       self.ix = desc_yay(val)  # Doesn't work.
+        #       self.iy = desc_fail(val)  # Doesn't work
+        self.dc = val # Works, and is apparently how you're supposed to be using these?
+        self.ac = desc_yay(val)
         
-
 a = owner('hello')
-a.butt = 'wut'
-        
+# a now has a.x and a.dc which are data descriptors of the desc_yay class
+# and are linked to two different private properties of `a` -- a._desc and a._wut,
+# which are defined in the class definition.
 print('w..')

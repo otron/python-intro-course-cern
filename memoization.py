@@ -109,3 +109,33 @@ def fib_it(n):
         fp1, fp2  = fp1 + fp2, fp1
     
     return fp1
+
+def fib_next(f1, f2):
+    return (f1+f2, f1)
+
+def fib_itrec(n):
+    if n in [0, 1]:
+        return 1
+    f1, f2 = 1, 1
+    for i in range(n-1):
+        f1, f2 = fib_next(f1, f2)
+    return f1
+
+def fib_itrec(n):
+    if n in [0, 1]:
+        return 1
+    else:
+        return fib_itrec2(n, 1, 1)
+
+def fib_itrec2(n, f1, f2):
+    # Tail recursion, heyooo.
+    if n == 0:
+        return f1
+    else:
+        return fib_itrec2(n-1, f1+f2, f1)
+
+def fib_itrec_single(n, f1=1, f2=0):
+    if n < 1:
+        return f1
+    else:
+        return fib_itrec_single(n-1, f1+f2, f1)

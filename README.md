@@ -3,6 +3,8 @@ Code snippets and notes from the Hands-on introduction course to Python by Jacek
 
 http://jacek.web.cern.ch/jacek/courses/python-intro/course.html
 
+Stuff starting with underscore (`_`) are handouts from the course instructor and not written by me.
+
 ## cloning & pushing from the course computer(s)
 (Hello future self!)
 
